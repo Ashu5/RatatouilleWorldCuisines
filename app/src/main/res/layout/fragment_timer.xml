@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.android.ashutosh.ratatouille_theworldcuisines.TimerFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <TextView
+        android:text="Set the timer for cooking recipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:padding="10dp"
+        android:id="@+id/timer_textView2"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Kitchen Timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timer_textView"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_marginBottom="35dp"
+        android:layout_above="@+id/timer_textView2"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Set Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_timer"
+        android:background="@color/colorAccent"
+        android:layout_below="@+id/timer_textView2"
+        android:layout_marginTop="37dp"
+        android:layout_alignRight="@+id/timer_textView2"
+        android:layout_alignEnd="@+id/timer_textView2"
+        android:layout_alignLeft="@+id/timer_textView2"
+        android:layout_alignStart="@+id/timer_textView2"
+
+        />
+
+</RelativeLayout>
