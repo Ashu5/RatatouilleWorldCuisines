@@ -3,6 +3,7 @@ package com.example.ashutoshdwivedi.ratatouilleworldcuisines;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -28,6 +29,7 @@ public class TimerFragment extends Fragment {
     TextView textView1;
     TextView textView2;
     Button timerbtn;
+    Context context;
     public static final int REQUEST_CODE = 0;
 
 
@@ -57,6 +59,7 @@ public class TimerFragment extends Fragment {
                 if(v.getId()==R.id.button_timer)
                 {
                     setAlarm();
+
                 }
             }
         });
@@ -68,7 +71,7 @@ public class TimerFragment extends Fragment {
 
         int alarmType = AlarmManager.ELAPSED_REALTIME;
         final int FIFTEEN_SEC_MILLIS = 15000;
-        Intent intent = new Intent(getActivity(), MainActivity.class);
+        Intent intent = new Intent(getActivity(), TimerFragment.class);
         intent.setAction(Intent.ACTION_MAIN);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
@@ -86,5 +89,14 @@ public class TimerFragment extends Fragment {
 
 
     }
+     public void setTimer()
+     {
+         PendingIntent pendingIntent;
+         alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+         Intent intent=new Intent(context,TimerFragment.class);
+         pendingIntent=PendingIntent.getBroadcast(context,0,intent,0);
+         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,SystemClock.elapsedRealtime() +60*1000,pendingIntent);
+
+     }
 
 }

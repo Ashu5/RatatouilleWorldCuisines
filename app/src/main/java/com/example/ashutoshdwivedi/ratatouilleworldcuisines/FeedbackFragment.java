@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
 
 /**
@@ -17,8 +20,10 @@ import android.widget.Button;
  */
 public class FeedbackFragment extends Fragment {
 
-View rootView;
+   View rootView;
     Button button;
+    Button ratrBtn;
+    RatingBar ratingBar;
     public FeedbackFragment() {
         // Required empty public constructor
     }
@@ -46,6 +51,30 @@ View rootView;
                 }
             }
         });
+        setRatingListener();
+    }
+    public void setRatingListener()
+    {
+        ratingBar=(RatingBar)rootView.findViewById(R.id.ratingBar);
+        ratrBtn=(Button)rootView.findViewById(R.id.rateBtn);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                String ratedValue= String.valueOf(rating);
+            }
+        });
+        ratrBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v.getId()==R.id.rateBtn)
+                {
+                   // Toast.makeText(getActivity().getApplicationContext(),"Thanks for rating:" + String.valueOf(ratingBar.getRating()),Toast.LENGTH_SHORT).show();
+             Snackbar snackbar=Snackbar.make(rootView.findViewById(R.id.relativeLayoutfeedback),"Thanks for rating us:"+ String.valueOf(ratingBar.getRating()),Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                }
+            }
+        });
+
     }
 
     public void composeEmail(String addresses, String subject, Uri attachment) {

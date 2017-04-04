@@ -81,7 +81,7 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
             @Override
             public void onClick(View view) {
                 if(AccountFragment.this.getActivity().getSharedPreferences("pref",0).getString("displayname",
-                        BuildConfig.FLAVOR).equals(BuildConfig.FLAVOR))
+                        "").equals(""))
                 {
                     Toast.makeText(AccountFragment.this.getActivity(),"Plesae Sign In to use services",
                             Toast.LENGTH_SHORT).show();
@@ -137,7 +137,7 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
             {
                 // add firebase authorization
                GoogleSignInAccount account= googleSignInResult.getSignInAccount();
-                textView.setText(account.getDisplayName());
+                this.textView.setText(account.getDisplayName());
 
             }
         }

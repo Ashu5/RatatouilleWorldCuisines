@@ -12,7 +12,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp">
+        android:layout_marginStart="30dp"
+        android:id="@+id/relativeLayoutfeedback">
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -21,9 +22,9 @@
             android:numStars="5"
             android:rating="4.0"
             android:stepSize="1.0"
-            android:layout_above="@+id/button"
+            android:layout_below="@+id/textView"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="48dp" />
+            android:layout_marginTop="30dp" />
 
         <TextView
             android:id="@+id/textView"
@@ -41,9 +42,21 @@
             android:layout_height="wrap_content"
             android:background="@color/feedbackbtn"
             android:text="Submit"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
+            android:layout_marginTop="106dp"
+            android:layout_below="@+id/ratingBar"
+            android:layout_alignParentStart="true" />
+        <Button
+            android:id="@+id/rateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="184dp"
+            android:text="Rate  "
+            android:background="@color/feedbackbtn"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true" />
 
     </RelativeLayout>
+
+
 </RelativeLayout>
