@@ -1,7 +1,9 @@
 package com.example.ashutoshdwivedi.ratatouilleworldcuisines;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,7 +19,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -25,6 +26,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuthException;
 
 
@@ -38,6 +42,8 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
     private ImageView imageView;
     private Button chefStuff;
     private Button myrecipe;
+    private Button signout;
+    private ProgressDialog mProgressDialog;
     private View rootView;
     private Integer STATUS=Integer.valueOf(0);
     private static final int RC_SIGN_IN=9001;
@@ -57,6 +63,8 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         this.rootView=inflater.inflate(R.layout.fragment_account, container, false);
+
+
         return this.rootView;
         //google api call
 
@@ -65,18 +73,31 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
-        MainActivity mainActivity = (MainActivity) getActivity();
-        this.imageView= (ImageView) this.rootView.findViewById(R.id.text_view_googleProfile);
+
+        this.textView=(TextView)this.rootView.findViewById(R.id.profile_name);
+        this.imageView= (ImageView) this.rootView.findViewById(R.id.googleProfile);
         this.myrecipe=(Button) this.rootView.findViewById(R.id.myrecipe);
         this.chefStuff=(Button)this.rootView.findViewById(R.id.community);
         this.signInButton=(SignInButton)this.rootView.findViewById(R.id.google_signIn);
-        this.signInButton.setSize(SignInButton.SIZE_WIDE);
+        this.signInButton.setSize(SignInButton.SIZE_STANDARD);
 
-       // googleSignInOptions= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        this.googleApiClient =new GoogleApiClient.Builder(getActivity()).addApi(Auth.GOOGLE_SIGN_IN_API,
-                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()).build();
+       googleSignInOptions= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+               .requestEmail()
+               .requestProfile()
+               .build();
+        this.googleApiClient =new GoogleApiClient.Builder(getActivity()).addApi(Auth.GOOGLE_SIGN_IN_API,googleSignInOptions)
+                .build();
 
+       /* this.googleApiClient =new GoogleApiClient.Builder(getActivity()).addApi(Auth.GOOGLE_SIGN_IN_API,
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .requestProfile()
+                        .build())
+                       .build();
+*/
         this.myrecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,8 +128,18 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
         this.signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent signInIntent=Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-                startActivityForResult(signInIntent,RC_SIGN_IN);
+               /* Intent signInIntent=Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                startActivityForResult(signInIntent,RC_SIGN_IN);*/
+            switch (view.getId())
+            {
+                case R.id.google_signIn:
+                    signIn();
+                    break;
+                case R.id.sign_out_button:
+                    signOut();
+                    break;
+
+            }
             }
         });
         //add sign out  button here
@@ -125,7 +156,6 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
 
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -136,24 +166,106 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
             if(googleSignInResult.isSuccess())
             {
                 // add firebase authorization
-               GoogleSignInAccount account= googleSignInResult.getSignInAccount();
-                this.textView.setText(account.getDisplayName());
+            /*   GoogleSignInAccount account= googleSignInResult.getSignInAccount();*/
+            GoogleSignInResult result= Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                handleSignIn(result);
+
 
             }
         }
     }
 
-    //sign in method
+
+    //[START]sign in method
     private void signIn()
     {
+
         this.STATUS=Integer.valueOf(1);
         startActivityForResult(Auth.GoogleSignInApi.getSignInIntent(this.googleApiClient),RC_SIGN_IN);
+        showProgressDialog();
     }
-    //sign out method
+    //[END] of sign in
+
+    public void handleSignIn(GoogleSignInResult result)
+    {
+        Log.d("AccountFragment","handleSignInResult:"+ result.isSuccess());
+        if(result.isSuccess())
+        {
+            GoogleSignInAccount account=result.getSignInAccount();
+            String name=account.getDisplayName();
+            this.textView.setText(name);
+            getActivity();
+            Uri photo=account.getPhotoUrl();
+           this.imageView.setImageURI(photo);
+
+
+            updateUI(true);
+        }
+        else
+        {
+            updateUI(false);
+        }
+    }
+
+
+    //[START] sign out method
     public void signOut()
     {
         this.STATUS=Integer.valueOf(1);
-        // add firebase authentication here to invalidate cache and session
+        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+            @Override
+            public void onResult(@NonNull Status status) {
+                updateUI(false);
+            }
+        });
+    }  // end of sign out
+
+    // Update UI
+
+    public void updateUI(boolean signedIn)
+    {
+        if(signedIn==true)
+        {
+            rootView.findViewById(R.id.googleProfile).setVisibility(rootView.VISIBLE);
+            rootView.findViewById(R.id.google_signIn).setVisibility(rootView.GONE);
+            rootView.findViewById(R.id.sign_out_button).setVisibility(rootView.VISIBLE);
+
+        }
+        else
+        {
+            rootView.findViewById(R.id.googleProfile).setVisibility(rootView.GONE);
+            rootView.findViewById(R.id.google_signIn).setVisibility(rootView.VISIBLE);
+            rootView.findViewById(R.id.sign_out_button).setVisibility(rootView.GONE);
+        }
+    }//END of updateUi
+
+
+    // START of revoke access
+    public void revokeAccess()
+    {
+        Auth.GoogleSignInApi.revokeAccess(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+            @Override
+            public void onResult(@NonNull Status status) {
+                updateUI(false);
+            }
+        });
+    }  // END of revokeAcess
+
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setMessage("Loading");
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
     }
 
 
