@@ -18,4 +18,8 @@
     <string name="toolbarname">Rotatouille -World Cuisines</string>
     <string name="sign_out">Sign Out</string>
     <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="breakfast_btn">Breakfast</string>
+    <string name="desserts_btn">Desserts</string>
+    <string name="lunch_btn">Lunch</string>
+    <string name="snacks_btn">Snacks</string>
 </resources>

@@ -26,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,7 +92,9 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
                .requestEmail()
                .requestProfile()
                .build();
-        this.googleApiClient =new GoogleApiClient.Builder(getActivity()).addApi(Auth.GOOGLE_SIGN_IN_API,googleSignInOptions)
+        this.googleApiClient =new GoogleApiClient.Builder(getActivity().getApplicationContext())
+
+                .addApi(Auth.GOOGLE_SIGN_IN_API,googleSignInOptions)
                 .build();
 
        /* this.googleApiClient =new GoogleApiClient.Builder(getActivity()).addApi(Auth.GOOGLE_SIGN_IN_API,
@@ -151,13 +154,14 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
 
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode==RC_SIGN_IN)
         {
-            GoogleSignInResult googleSignInResult=Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            //GoogleSignInResult googleSignInResult=Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(googleSignInResult.isSuccess())
             {
                 // add firebase authorization
@@ -183,7 +187,7 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
     public void handleSignIn(GoogleSignInResult result)
     {
         Log.d("AccountFragment","handleSignInResult:"+ result.isSuccess());
-        if(result.isSuccess())
+        if(result.getStatus().isSuccess())
         {
             GoogleSignInAccount account=result.getSignInAccount();
             String name=account.getDisplayName();
@@ -249,7 +253,7 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setMessage("Loading");
+            mProgressDialog.setMessage("Fetching Details...");
             mProgressDialog.setIndeterminate(true);
         }
 
@@ -273,11 +277,32 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
     @Override
     public void onStart() {
         super.onStart();
-        if(this.googleApiClient!=null)
-        {
-            this.googleApiClient.connect();
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
+        if (opr.isDone()) {
+            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+            // and the GoogleSignInResult will be available instantly.
+            Log.d(TAG, "Got cached sign-in");
+            GoogleSignInResult result = opr.get();
+           // handleSignInResult(result);
+        } else {
+            // If the user has not previously signed in on this device or the sign-in has expired,
+            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+            // single sign-on will occur in this branch.
+            //showProgressDialog();
+            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                @Override
+                public void onResult(GoogleSignInResult googleSignInResult) {
+                    hideProgressDialog();
+                   // handleSignInResult(googleSignInResult);
+                }
+            });
         }
     }
+        /*if(this.googleApiClient!=null)
+        {
+            this.googleApiClient.connect();
+        }*/
+
 
     @Override
     public void onDestroy() {

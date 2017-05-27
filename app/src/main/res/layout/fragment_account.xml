@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
@@ -9,18 +10,41 @@
     tools:context=".AccountFragment">
 
 
+    <LinearLayout
+        android:id="@+id/sign_out_and_disconnect"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
 
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/main_layout"
-        android:layout_width="match_parent"
+        android:layout_width="368dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:baselineAligned="false"
         android:orientation="vertical"
         android:weightSum="1"
-        android:layout_marginTop="8dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/googleProfile"
@@ -40,6 +64,7 @@
             android:layout_marginTop="13dp"
             android:gravity="center"
             android:textColor="#000000" />
+
         <Button
             android:id="@+id/community"
             android:layout_width="match_parent"
@@ -64,7 +89,6 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginTop="31dp"
-            android:layout_weight="1.0"
             android:background="@color/myrecipe"
             android:text="My Recipes"
             android:textColor="#ffffff" />
@@ -80,22 +104,9 @@
             android:layout_marginBottom="73dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="60dp"
-            android:layout_weight="0.24"></com.google.android.gms.common.SignInButton>
-    </LinearLayout>
+            android:layout_weight="0.19">
 
-
-    <LinearLayout
-        android:id="@+id/sign_out_and_disconnect"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="30dp">
+        </com.google.android.gms.common.SignInButton>
 
         <Button
             android:id="@+id/sign_out_button"
@@ -106,14 +117,10 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginTop="40dp"
-            android:layout_weight="1"
+            android:layout_weight="0.56"
             android:background="@color/cheftouch"
             android:text="@string/sign_out" />
-
-
     </LinearLayout>
-
-
 
 
     <!-- <Button android:textColor="#ffffff"
@@ -124,4 +131,4 @@
          android:text="Sign out" />-->
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
