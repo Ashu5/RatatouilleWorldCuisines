@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/comtent_main"
@@ -10,4 +10,141 @@
     tools:context="com.example.ashutoshdwivedi.ratatouille_worldcuisines.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-</RelativeLayout>
+
+  <!--  <Button
+        android:layout_width="177dp"
+        android:layout_height="51dp"
+        android:text="Breakfast"
+        android:id="@+id/breakfast_btn"
+        android:background="@color/breakfastbtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="24dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.521"
+        android:layout_alignTop="@+id/lunch_btn"
+        android:layout_alignStart="@+id/custom_indicator2" />
+
+    <Button
+        android:layout_width="178dp"
+        android:layout_height="52dp"
+        android:text="Lunch"
+        android:id="@+id/lunch_btn"
+        android:background="@color/lunchbtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.669"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="24dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_above="@+id/imageView4"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp" />
+    <Button
+        android:layout_width="180dp"
+        android:layout_height="51dp"
+        android:text="Snacks"
+        android:id="@+id/snacks_btn"
+        android:background="@color/snacksbtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.963"
+        app:layout_constraintVertical_bias="0.522"
+        android:layout_alignBaseline="@+id/dinner_btn"
+        android:layout_alignBottom="@+id/dinner_btn"
+        android:layout_toEndOf="@+id/lunch_btn"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        tools:layout_editor_absoluteY="239dp"
+        tools:layout_editor_absoluteX="189dp" />
+    <Button
+        android:layout_width="178dp"
+        android:layout_height="51dp"
+        android:text="Desserts"
+        android:background="@color/dinnerkbtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/dinner_btn"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.663"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.958"
+        android:layout_above="@+id/slider"
+        android:layout_alignParentStart="true" />
+
+
+    <com.daimajia.slider.library.Indicators.PagerIndicator
+        android:id="@+id/custom_indicator2"
+        style="@style/AndroidImageSlider_Corner_Oval_Orange"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:gravity=""
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="162dp"
+        android:layout_height="102dp"
+        app:srcCompat="@drawable/bkf_pmpknbsct"
+        app:layout_constraintTop_toBottomOf="@+id/slider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.785"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.038"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/lunch_btn" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="168dp"
+        android:layout_height="117dp"
+        app:srcCompat="@drawable/lunch_tacosp"
+        app:layout_constraintTop_toTopOf="@+id/snacks_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.791"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/imageView3"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.476"
+        tools:layout_editor_absoluteY="361dp"
+        tools:layout_editor_absoluteX="197dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/lunch_btn" />
+
+    <com.daimajia.slider.library.SliderLayout
+        android:id="@+id/slider"
+        android:layout_width="379dp"
+        android:layout_height="233dp"
+        android:layout_alignEnd="@+id/snacks_btn"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />-->
+
+
+</android.support.constraint.ConstraintLayout>

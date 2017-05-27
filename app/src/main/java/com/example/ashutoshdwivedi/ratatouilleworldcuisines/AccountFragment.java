@@ -26,30 +26,32 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AccountFragment extends Fragment  implements GoogleApiClient.OnConnectionFailedListener{
- private TextView textView;
-    private GoogleApiClient googleApiClient;
-    private SignInButton signInButton;
-    private ImageView imageView;
-    private Button chefStuff;
-    private Button myrecipe;
-    private Button signout;
-    private ProgressDialog mProgressDialog;
-    private View rootView;
-    private Integer STATUS=Integer.valueOf(0);
-    private static final int RC_SIGN_IN=9001;
-    private  static final String TAG="GoogleActivity";
-    GoogleSignInOptions googleSignInOptions;
-
+ private View rootView;
+    private TextView mProfileTitle;
+    private SignInButton mGoogleSignIn;
+    private  Button mSignOut;
+    Button myrecipe;
+    Button chefStuff;
+    private ImageView mGoogleProfile;
+    private FirebaseUser mFirebaseUser;
+    private FirebaseAuth mFirebaseAuth;
+    private GoogleSignInOptions googleSignInOptions;
+    GoogleSignInResult googleSignInResult;
+    GoogleApiClient googleApiClient;
+    private static final int RC_SIGN_IN = 9001;
+    private  ProgressDialog mProgressDialog;
+    private final String TAG="MyAccount";
+    private  FirebaseAuth.AuthStateListener mAuthListener;
 
 
 
@@ -77,12 +79,13 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
         ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
 
-        this.textView=(TextView)this.rootView.findViewById(R.id.profile_name);
-        this.imageView= (ImageView) this.rootView.findViewById(R.id.googleProfile);
+        this.mProfileTitle=(TextView)this.rootView.findViewById(R.id.profile_name);
+        this.mGoogleProfile= (ImageView) this.rootView.findViewById(R.id.googleProfile);
         this.myrecipe=(Button) this.rootView.findViewById(R.id.myrecipe);
         this.chefStuff=(Button)this.rootView.findViewById(R.id.community);
-        this.signInButton=(SignInButton)this.rootView.findViewById(R.id.google_signIn);
-        this.signInButton.setSize(SignInButton.SIZE_STANDARD);
+        this.mSignOut=(Button)this.rootView.findViewById(R.id.sign_out_button);
+        this.mGoogleSignIn=(SignInButton)this.rootView.findViewById(R.id.google_signIn);
+        this.mGoogleSignIn.setSize(SignInButton.SIZE_STANDARD);
 
        googleSignInOptions= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                .requestEmail()
@@ -97,7 +100,10 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
                         .requestProfile()
                         .build())
                        .build();
+
 */
+
+
         this.myrecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,34 +131,23 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
             }
         });
 
-        this.signInButton.setOnClickListener(new View.OnClickListener() {
+        this.mGoogleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                /* Intent signInIntent=Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
                 startActivityForResult(signInIntent,RC_SIGN_IN);*/
-            switch (view.getId())
-            {
-                case R.id.google_signIn:
-                    signIn();
-                    break;
-                case R.id.sign_out_button:
-                    signOut();
-                    break;
 
+                  signIn();
             }
-            }
+
         });
         //add sign out  button here
-
-
-
-        this.signInButton.setOnClickListener(new View.OnClickListener() {
+        this.mSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                AccountFragment.this.signIn();
+            public void onClick(View v) {
+                signOut();
             }
         });
-
 
     }
 
@@ -180,9 +175,8 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
     private void signIn()
     {
 
-        this.STATUS=Integer.valueOf(1);
         startActivityForResult(Auth.GoogleSignInApi.getSignInIntent(this.googleApiClient),RC_SIGN_IN);
-        showProgressDialog();
+
     }
     //[END] of sign in
 
@@ -193,10 +187,10 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
         {
             GoogleSignInAccount account=result.getSignInAccount();
             String name=account.getDisplayName();
-            this.textView.setText(name);
+            this.mProfileTitle.setText(name);
             getActivity();
             Uri photo=account.getPhotoUrl();
-           this.imageView.setImageURI(photo);
+           this.mGoogleProfile.setImageURI(photo);
 
 
             updateUI(true);
@@ -211,7 +205,7 @@ public class AccountFragment extends Fragment  implements GoogleApiClient.OnConn
     //[START] sign out method
     public void signOut()
     {
-        this.STATUS=Integer.valueOf(1);
+       /* this.STATUS=Integer.valueOf(1);*/
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {

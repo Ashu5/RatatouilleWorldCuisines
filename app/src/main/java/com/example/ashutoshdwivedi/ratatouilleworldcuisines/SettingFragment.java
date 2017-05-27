@@ -42,10 +42,13 @@ public class SettingFragment extends Fragment {
         return rootView;
     }
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+
         ((MainActivity) getActivity()).getSupportActionBar().setTitle((CharSequence) "Settings");
         MainActivity mainActivity = (MainActivity) getActivity();
         this.clear = (TextView) this.rootView.findViewById(R.id.clear_cache);

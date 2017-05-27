@@ -46,6 +46,9 @@ public class TimerFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+
         this.textView1=(TextView)rootView.findViewById(R.id.timer_textView);
         this.textView2=(TextView)rootView.findViewById(R.id.timer_textView2);
         this.timerbtn=(Button)rootView.findViewById(R.id.button_timer);

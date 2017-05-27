@@ -6,5 +6,10 @@
     <color name="myrecipe">#1baa68</color>
     <color name="cheftouch">#158996</color>
     <color name="signout">#f44636</color>
-    <color name="feedbackbtn">#F5B7B1</color>
+    <color name="lunchbtn">#9fd480</color>
+    <color name="dinnerkbtn">#ecc5c5</color>
+    <color name="snacksbtn">#dabce7</color>
+    <color name="breakfastbtn">#a393bf</color>
+    <color name="feedbackbtn">#a393bf</color>
+
 </resources>

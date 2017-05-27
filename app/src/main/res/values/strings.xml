@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ratatouille-World Cuisines</string>
+    <string name="app_name">Ratatouille</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -16,4 +16,6 @@
     <string name="hello_blank_fragment">blank</string>
     <string name="title_activity_map_app">Map</string>
     <string name="toolbarname">Rotatouille -World Cuisines</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="signed_in_fmt">Signed in as: %s</string>
 </resources>

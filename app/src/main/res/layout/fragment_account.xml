@@ -2,90 +2,126 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#eeeeee"
     android:orientation="vertical"
     android:weightSum="4"
-    android:background="#eeeeee"
     tools:context=".AccountFragment">
 
-    <com.google.android.gms.common.SignInButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/google_signIn"
-        android:layout_marginBottom="178dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-    </com.google.android.gms.common.SignInButton>
+
+
 
     <LinearLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="vertical"
-        android:id="@+id/main_layout"
         android:weightSum="1"
+        android:layout_marginTop="8dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_centerHorizontal="true">
 
         <ImageView
+            android:id="@+id/googleProfile"
             android:layout_width="169dp"
             android:layout_height="75dp"
-            android:layout_marginTop="30dp"
-            android:id="@+id/text_view_googleProfile"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_weight="0.56" />
 
         <TextView
-            android:layout_width="300dp"
+            android:id="@+id/profile_name"
+            android:layout_width="371dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_alignStart="@+id/myrecipe"
+            android:layout_below="@+id/text_view_googleProfile"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="13dp"
             android:gravity="center"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/profile_name" />
-
-        <Button android:textColor="#ffffff"
-            android:layout_gravity="center"
-            android:id="@+id/myrecipe"
-            android:background="@color/myrecipe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="10dp"
-            android:text="My Recipes"
-            android:layout_weight="1.0" />
-
-        <Button android:textColor="#ffffff"
-            android:layout_gravity="center"
+            android:textColor="#000000" />
+        <Button
             android:id="@+id/community"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/myrecipe"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_weight="0.15"
+            android:background="@color/cheftouch"
             android:text="Chef Touch"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/myrecipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/main_layout"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="31dp"
             android:layout_weight="1.0"
-          android:background="@color/cheftouch" />
+            android:background="@color/myrecipe"
+            android:text="My Recipes"
+            android:textColor="#ffffff" />
 
-        <TextView android:gravity="center"
-            android:id="@+id/privacy"
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/google_signIn"
+            android:layout_width="122dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/sign_out_and_disconnect"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="73dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="60dp"
+            android:layout_weight="0.24"></com.google.android.gms.common.SignInButton>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/sign_out_and_disconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="30dp">
+
+        <Button
+            android:id="@+id/sign_out_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-
-            android:layout_alignParentBottom="true" />
-
-       <!-- <Button android:textColor="#ffffff"
-            android:id="@+id/signout"
-            android:background="@color/signout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign out" />-->
+            android:layout_below="@+id/main_layout"
+            android:layout_marginBottom="43dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_weight="1"
+            android:background="@color/cheftouch"
+            android:text="@string/sign_out" />
 
 
     </LinearLayout>
+
+
+
+
+    <!-- <Button android:textColor="#ffffff"
+         android:id="@+id/signout"
+         android:background="@color/signout"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="Sign out" />-->
 
 
 </RelativeLayout>

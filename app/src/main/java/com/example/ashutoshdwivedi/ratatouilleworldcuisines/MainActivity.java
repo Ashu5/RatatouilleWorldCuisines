@@ -21,24 +21,47 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.ashutoshdwivedi.ratatouilleworldcuisines.R;
+
+import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     boolean doubletapClose=false;
+    private SliderLayout sliderLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+      /*  sliderLayout = (SliderLayout)findViewById(R.id.slider);
 
-        getSupportActionBar().setHomeButtonEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
+        file_maps.put("Banana Muffins", R.drawable.bkf_bnanamffins);
+        file_maps.put("Pumpkin Seed Biscuits", R.drawable.bkf_pmpknbsct);
+        file_maps.put("Kadhai Paneer", R.drawable.lunch_kadaipnr);
+        file_maps.put("Mashed Potatos", R.drawable.bkf_mshdpotos);
+        for (String name : file_maps.keySet()) {
+            TextSliderView textSliderView = new TextSliderView(this);
+            textSliderView.description(name);
+            textSliderView.image(file_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit);
+            sliderLayout.addSlider(textSliderView);
+            sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+            sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            sliderLayout.setCustomAnimation(new DescriptionAnimation());
+            sliderLayout.setDuration(4000);
 
+        }
 
+*/
 
 
 
@@ -98,6 +121,7 @@ public class MainActivity extends AppCompatActivity
         if(id==-1)
         {
             setTitle(0);
+
         }
         if (id == R.id.nav_home) {
             setFragment(0);
@@ -141,13 +165,13 @@ public class MainActivity extends AppCompatActivity
         switch (position) {
             case 0:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.comtent_main, new HomeFragment()).addToBackStack(null).commit();
+                //getSupportFragmentManager().beginTransaction().replace(R.id.comtent_main, new HomeFragment()).addToBackStack(null).commit();
 
-//                fragmentManager = getSupportFragmentManager();
-//                fragmentTransaction = fragmentManager.beginTransaction();
-//               HomeFragment homeFragment=new HomeFragment();
-//                fragmentTransaction.replace(R.id.comtent_main,homeFragment );
-//                fragmentTransaction.commit();
+               fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+            HomeFragment homeFragment=new HomeFragment();
+              fragmentTransaction.replace(R.id.comtent_main,homeFragment );
+           fragmentTransaction.commit();
                 break;
             case 1:
                 //fragment= new AccountFragment();
